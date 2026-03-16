@@ -1,0 +1,17 @@
+[Unit]
+Description=EventStream Calendar Aggregator
+After=network.target
+
+[Service]
+Type=simple
+User=mgamble
+WorkingDirectory=/opt/eventstream
+ExecStart=/usr/bin/java -jar /opt/eventstream/eventstream.jar
+Restart=on-failure
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=eventstream
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,3 @@
+calendar.hex42labs.ca {
+    reverse_proxy localhost:8080
+}

@@ -1,0 +1,13 @@
+target/
+*.class
+*.jar
+*.log
+.idea/
+*.iml
+.DS_Store
+jte-classes/
+
+# Keep the example, ignore real config in working directory
+!/src/main/resources/application.properties
+application.properties
+!application.properties.example

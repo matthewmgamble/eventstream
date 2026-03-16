@@ -1,0 +1,32 @@
+# Database
+db.url=jdbc:mariadb://localhost:3306/eventstream
+db.user=eventstream
+db.password=changeme
+
+# Server
+server.port=8080
+
+# Sync
+sync.interval.minutes=60
+sync.expansion.months=6
+
+# Prune
+prune.retention.days=90
+
+# Display timezone (defaults to system timezone if not set)
+# display.timezone=America/Toronto
+
+# Office locations (comma-separated list of location names)
+office.locations=Office,Home
+# Default location when no day-specific default is set
+office.default=Home
+# Day-of-week defaults (optional, uses office.default if not set)
+# office.default.MONDAY=Office
+# office.default.TUESDAY=Office
+# office.default.WEDNESDAY=Office
+# office.default.THURSDAY=Office
+# office.default.FRIDAY=Home
+
+# Aliases for location names (comma-separated, case-insensitive)
+# office.aliases.Office=HQ,headquarters
+# office.aliases.Home=WFH,Remote

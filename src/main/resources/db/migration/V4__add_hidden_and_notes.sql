@@ -1,0 +1,2 @@
+ALTER TABLE calendar_events ADD COLUMN hidden BOOLEAN NOT NULL DEFAULT FALSE AFTER raw_rrule;
+ALTER TABLE calendar_events ADD COLUMN notes TEXT NULL AFTER hidden;

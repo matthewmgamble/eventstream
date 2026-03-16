@@ -9,7 +9,9 @@ A self-hosted calendar aggregator that consumes multiple ICS feeds, expands recu
 - **Web dashboard** — Agenda view with feed color-coding, tentative event indicators, hide/unhide, and per-event notes
 - **JSON API** — Full REST API for querying events, feeds, free time, and office locations
 - **MCP server** — 7 tools for AI assistant integration (get events, find free time, manage office location, etc.)
-- **Free time finder** — Computes available time slots accounting for all calendars
+- **Event hiding** — Hide events from the API and MCP server directly in the dashboard. Useful for shared calendars where you're subscribed to a family member's schedule — you can see their events for awareness but hide them so they don't clutter your free time calculations or AI assistant responses
+- **Per-event notes** — Add notes to any event from the dashboard, visible in the API and to AI assistants
+- **Free time finder** — Computes available time slots accounting for all calendars (respects hidden events)
 - **Office location tracking** — Configurable office locations with day-of-week defaults and per-day overrides
 - **Timezone support** — Events stored in UTC, displayed in a configurable timezone
 

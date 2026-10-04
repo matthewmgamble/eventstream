@@ -17,7 +17,7 @@ public class CalendarTools {
                     "type", "object",
                     "properties", Map.of(
                         "from", Map.of("type", "string", "description", "Start date in ISO format (yyyy-MM-dd). Defaults to today."),
-                        "to", Map.of("type", "string", "description", "End date in ISO format (yyyy-MM-dd). Defaults to from + 1 day."),
+                        "to", Map.of("type", "string", "description", "End date (inclusive) in ISO format (yyyy-MM-dd). All events on this date are included. Defaults to same as from (i.e., a single day). For tomorrow's events, set both from and to to tomorrow's date."),
                         "feed_name", Map.of("type", "string", "description", "Optional: filter to a specific calendar by name (e.g., 'Work', 'Personal')"),
                         "q", Map.of("type", "string", "description", "Optional: text search across event titles, descriptions, and locations")
                     )

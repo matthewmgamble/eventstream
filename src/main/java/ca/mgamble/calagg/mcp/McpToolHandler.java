@@ -48,7 +48,7 @@ public class McpToolHandler {
 
     private String handleGetEvents(Map<String, Object> args) {
         LocalDate fromDate = parseDate(args.get("from"), LocalDate.now());
-        LocalDate toDate = parseDate(args.get("to"), fromDate.plusDays(1));
+        LocalDate toDate = parseDate(args.get("to"), fromDate);
         String feedName = args.get("feed_name") != null ? args.get("feed_name").toString() : null;
         String query = args.get("q") != null ? args.get("q").toString() : null;
 
@@ -65,7 +65,7 @@ public class McpToolHandler {
 
         ZoneId displayZone = ZoneId.of(config.getDisplayTimezone());
         LocalDateTime utcFrom = fromDate.atStartOfDay().atZone(displayZone).withZoneSameInstant(ZoneOffset.UTC).toLocalDateTime();
-        LocalDateTime utcTo = toDate.atStartOfDay().atZone(displayZone).withZoneSameInstant(ZoneOffset.UTC).toLocalDateTime();
+        LocalDateTime utcTo = toDate.plusDays(1).atStartOfDay().atZone(displayZone).withZoneSameInstant(ZoneOffset.UTC).toLocalDateTime();
 
         List<CalendarEvent> events = eventRepository.findByDateRange(utcFrom, utcTo, feedIds, query, null, false, 500, 0);
         return formatEvents(events, displayZone);

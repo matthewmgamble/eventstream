@@ -117,7 +117,7 @@ public class EventRepository {
     public List<CalendarEvent> findByDateRange(LocalDateTime from, LocalDateTime to, List<Long> feedIds, String query, Boolean allDay, boolean includeHidden, int limit, int offset) {
         List<CalendarEvent> events = new ArrayList<>();
         StringBuilder sql = new StringBuilder(
-            "SELECT e.*, f.name AS feed_name, f.color AS feed_color FROM calendar_events e JOIN calendar_feeds f ON e.feed_id = f.id WHERE e.dtstart >= ? AND e.dtstart <= ?"
+            "SELECT e.*, f.name AS feed_name, f.color AS feed_color FROM calendar_events e JOIN calendar_feeds f ON e.feed_id = f.id WHERE e.dtstart >= ? AND e.dtstart < ?"
         );
         List<Object> params = new ArrayList<>();
         params.add(Timestamp.valueOf(from));
@@ -179,7 +179,7 @@ public class EventRepository {
 
     public int countByDateRange(LocalDateTime from, LocalDateTime to, List<Long> feedIds, String query, Boolean allDay) {
         StringBuilder sql = new StringBuilder(
-            "SELECT COUNT(*) FROM calendar_events e WHERE e.dtstart >= ? AND e.dtstart <= ?"
+            "SELECT COUNT(*) FROM calendar_events e WHERE e.dtstart >= ? AND e.dtstart < ?"
         );
         List<Object> params = new ArrayList<>();
         params.add(Timestamp.valueOf(from));

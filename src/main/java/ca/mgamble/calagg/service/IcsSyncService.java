@@ -275,29 +275,35 @@ public class IcsSyncService {
     }
 
     private LocalDateTime toLocalDateTime(Temporal temporal) {
-        if (temporal instanceof LocalDateTime ldt) {
-            return ldt;
-        } else if (temporal instanceof LocalDate ld) {
-            return ld.atStartOfDay();
+        return toUtc(temporal, ZoneId.of(config.getDisplayTimezone()));
+    }
+
+    /**
+     * An ICS date or time as a UTC LocalDateTime, which is how events are stored. An all-day DATE is midnight where the
+     * calendar is shown ({@code zone}): stored as UTC midnight, it showed a day early anywhere west of Greenwich. A
+     * floating time (no TZID) is local time too, per RFC 5545.
+     */
+    static LocalDateTime toUtc(Temporal temporal, ZoneId zone) {
+        if (temporal instanceof LocalDate ld) {
+            return ld.atStartOfDay(zone).withZoneSameInstant(ZoneOffset.UTC).toLocalDateTime();
+        } else if (temporal instanceof LocalDateTime ldt) {
+            return ldt.atZone(zone).withZoneSameInstant(ZoneOffset.UTC).toLocalDateTime();
         } else if (temporal instanceof ZonedDateTime zdt) {
             return zdt.withZoneSameInstant(ZoneOffset.UTC).toLocalDateTime();
+        } else if (temporal instanceof OffsetDateTime odt) {
+            return odt.atZoneSameInstant(ZoneOffset.UTC).toLocalDateTime();
         } else if (temporal instanceof Instant instant) {
             return LocalDateTime.ofInstant(instant, ZoneOffset.UTC);
         }
         // Fallback: try parsing as ISO instant (e.g., "2018-12-06T15:00Z")
         String str = temporal.toString();
         try {
-            return LocalDateTime.parse(str);
+            return Instant.parse(str).atZone(ZoneOffset.UTC).toLocalDateTime();
         } catch (Exception e) {
-            try {
-                return Instant.parse(str).atZone(ZoneOffset.UTC).toLocalDateTime();
-            } catch (Exception e2) {
-                // Strip trailing Z and try again
-                if (str.endsWith("Z")) {
-                    return LocalDateTime.parse(str.substring(0, str.length() - 1));
-                }
-                throw e;
+            if (str.endsWith("Z")) {
+                return LocalDateTime.parse(str.substring(0, str.length() - 1));
             }
+            throw e;
         }
     }
 }
